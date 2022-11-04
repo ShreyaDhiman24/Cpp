@@ -1,74 +1,35 @@
 #include <iostream>
+using namespace std;
 
-class coordinate
-{
-	int x,y,z;
-	public:
-		void getdata(int a,int b,int c)
-		{
-			x=a;
-			y=b;
-			z=c;
-		}
-		void display()
-		{
-			cout<<"\tx="<<x<<" y="<<y<<" z="<<z<<"\n";
-		}
-		friend coordinate operator++(coordinate);
-		friend coordinate operator+=(coordinate,coordinate);
-		friend coordinate operator==(coordinate, coordinate);
-};
-coordinate operator==(coordinate a, coordinate b)
-{
-	if(a.x==b.x || a.y==b.y || a.z==b.z)
-	{
-	      cout<<"\nboth coordinates are same.coordinates are=\n";
-	      a.display();
-	}
-	else
-	{
-		cout<<"\n\tboth coordinates are not same, coordinates are=\n";
-		a.display();
-		b.display();
-
-	}
-}
-coordinate operator++(coordinate a)
-{
-	a.x=a.x+1;
-	a.y=a.y+1;
-	a.z=a.z+1;
-	return a;
-}
-coordinate operator+=(coordinate a,coordinate b)
-{
-	a.x=a.x+b.x;
-	a.y=a.y+b.y;
-	a.z=a.z+b.z;
-	return a;
-}
 int main()
 {
-	clrscr();
+    // Open two files to be merged
+    FILE *fp1 = fopen("Source1.txt", "r");
+    FILE *fp2 = fopen("Source2.txt", "r");
 
-	coordinate a;
-	a.getdata(8,3,19);
-	cout<<"first coordinates=\n";
-	a.display();
-	coordinate b;
-	b.getdata(7,13,17);
-	cout<<"\nsecond cordinates=\n";
-	b.display();
-	a=a++;
-	cout<<"\nincreamented first coordinates, now first coordinate is=\n";
-	a.display();
-	a=a+=b;
-	cout<<"\naddition of first and second coordinates is=\n";
-	a.display();
-	cout<<"\nresult of comparision of first and secod cordinate=\n";
-	a==b;
+    // Open file to store the result
+    FILE *fp3 = fopen("Target.txt", "w");
 
+    char c;
+    if (fp1 == NULL || fp2 == NULL || fp3 == NULL)
 
-	getch();
-	return 0;
+    {
+        puts("Could not open files");
+        exit(0);
+    }
+
+    // Copy contents of first file to Target.txt
+    while ((c = fgetc(fp1)) != EOF)
+        fputc(c, fp3);
+
+    // Copy contents of second file to Target.txt
+    while ((c = fgetc(fp2)) != EOF)
+        fputc(c, fp3);
+
+    printf("Merged Source1.txt and Source2.txt into Target.txt");
+    fclose(fp1);
+    fclose(fp2);
+    fclose(fp3);
+
+    return 0;
 }
