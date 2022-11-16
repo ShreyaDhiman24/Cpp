@@ -1,35 +1,71 @@
 #include <iostream>
+#include <fstream>
 using namespace std;
+
+class item
+{
+    string name;
+    float price;
+    int qty;
+
+public:
+    item(string n, float p, int q)
+    {
+        name = n;
+        price = p;
+        qty = q;
+    }
+    friend ofstream &operator<<(ofstream &ofs, item &i);
+    friend ifstream &operator>>(ifstream &ifs, item &i);
+    friend ostream &operator<<(ostream &out, item &i);
+    friend istream &operator>>(istream &in, item &i);
+};
+ofstream &operator<<(ofstream &ofs, item &i)
+{
+    ofs << i.name << endl
+        << i.price << endl
+        << i.qty << endl;
+    return ofs;
+}
+ifstream &operator>>(ifstream &ifs, item &i)
+{
+    ifs >> i.name >> i.price >> i.qty;
+    return ifs;
+}
+ostream &operator<<(ostream &out, item &i)
+{
+    out << i.name << endl
+        << i.price << endl
+        << i.qty << endl;
+    return out;
+}
+istream &operator>>(istream &in, item &i)
+{
+    in >> i.name >> i.price >> i.qty;
+    return in;
+}
 
 int main()
 {
-    // Open two files to be merged
-    FILE *fp1 = fopen("Source1.txt", "r");
-    FILE *fp2 = fopen("Source2.txt", "r");
+    int n;
+    string name;
+    float price;
+    int qty;
 
-    // Open file to store the result
-    FILE *fp3 = fopen("Target.txt", "w");
-
-    char c;
-    if (fp1 == NULL || fp2 == NULL || fp3 == NULL)
-
+    cout << "number of items: ";
+    cin >> n;
+    for (int i = 0; i < n; i++)
     {
-        puts("Could not open files");
-        exit(0);
+        item i1(name, price, qty);
+        cin >> i1;
+
+        // storing items in file
+        ofstream ofs("my.txt", ios::trunc);
+        ofs << i1;
+        ofs.close();
+
+        ifstream ifs("my.txt");
+        ifs >> i1;
+        cout << i1;
     }
-
-    // Copy contents of first file to Target.txt
-    while ((c = fgetc(fp1)) != EOF)
-        fputc(c, fp3);
-
-    // Copy contents of second file to Target.txt
-    while ((c = fgetc(fp2)) != EOF)
-        fputc(c, fp3);
-
-    printf("Merged Source1.txt and Source2.txt into Target.txt");
-    fclose(fp1);
-    fclose(fp2);
-    fclose(fp3);
-
-    return 0;
 }
