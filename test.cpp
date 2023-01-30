@@ -1,71 +1,60 @@
-#include <iostream>
-#include <fstream>
+#include <bits/stdc++.h>
 using namespace std;
 
-class item
+#define MIN_Balance 500;
+class InsufficientFunds
 {
-    string name;
-    float price;
-    int qty;
+};
+
+class account
+{
+private:
+    long accNo;
+    string fName;
+    string lName;
+    float balance;
+    static long NextaccNo;
 
 public:
-    item(string n, float p, int q)
-    {
-        name = n;
-        price = p;
-        qty = q;
-    }
-    friend ofstream &operator<<(ofstream &ofs, item &i);
-    friend ifstream &operator>>(ifstream &ifs, item &i);
-    friend ostream &operator<<(ostream &out, item &i);
-    friend istream &operator>>(istream &in, item &i);
+    account(){};
+    account(string fn, string ln, float balance);
 };
-ofstream &operator<<(ofstream &ofs, item &i)
-{
-    ofs << i.name << endl
-        << i.price << endl
-        << i.qty << endl;
-    return ofs;
-}
-ifstream &operator>>(ifstream &ifs, item &i)
-{
-    ifs >> i.name >> i.price >> i.qty;
-    return ifs;
-}
-ostream &operator<<(ostream &out, item &i)
-{
-    out << i.name << endl
-        << i.price << endl
-        << i.qty << endl;
-    return out;
-}
-istream &operator>>(istream &in, item &i)
-{
-    in >> i.name >> i.price >> i.qty;
-    return in;
-}
-
 int main()
 {
-    int n;
-    string name;
-    float price;
-    int qty;
+    cout << "* * * Banking System * * *" << endl;
 
-    cout << "number of items: ";
-    cin >> n;
-    for (int i = 0; i < n; i++)
+    cout << "\tSelect one option below: " << endl;
+    cout << "\t1. Open an account" << endl;
+    cout << "\t2. Balance Enquiry" << endl;
+    cout << "\t3. Deposit" << endl;
+    cout << "\t4. Withdrawal" << endl;
+    cout << "\t5. Close an account" << endl;
+    cout << "\t6. Show all accounts" << endl;
+    cout << "\t7. Quit" << endl;
+
+    int choice = 1;
+    cout << "Enter your choice: ";
+    cin >> choice;
+
+    string name1;
+    string name2;
+    float balance;
+
+    switch (choice)
     {
-        item i1(name, price, qty);
-        cin >> i1;
+    case 1:
+        cout << "Enter First Name: ";
+        cin >> name1;
+        cout << "Enter Last Name: ";
+        cin >> name2;
+        cout << "Enter Initial Balance: ";
+        cin >> balance;
 
-        // storing items in file
-        ofstream ofs("my.txt", ios::trunc);
-        ofs << i1;
-        ofs.close();
+        break;
 
-        ifstream ifs("my.txt");
-        ifs >> i1;
-        cout << i1;
+    default:
+        break;
     }
+
+    return 0;
 }
