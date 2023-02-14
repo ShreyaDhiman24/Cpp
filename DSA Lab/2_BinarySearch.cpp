@@ -27,7 +27,6 @@ int binarySearch(int *arr, int beg, int last, int x)
     return -1;
 }
 
-
 int deleteItem(int *arr, int n, int item)
 {
     for (int i = 0; i < n; i++)
@@ -46,8 +45,8 @@ int deleteItem(int *arr, int n, int item)
                 arr[j] = arr[j + 1]; // reduce size of array and move all elements on space ahead
             }
         }
+        return n;
     }
-    return n;
 }
 
 int main()
@@ -66,21 +65,9 @@ int main()
     cin >> x;
 
     int result = binarySearch(arr, 0, n - 1, x);
-    if (result == -1)
-    {
-        cout << "Element is not present in array";
-    }
-    else
-    {
-        cout << "Element is present at index " << result;
-        // Delete item from arr[]
-        n = deleteItem(arr, n, x);
-        cout << "Modified array after deletion: ";
-        for (int i = 0; i < n; i++)
-        {
-            cout << arr[i] << " ";
-        }
-    }
+    (result == -1)
+        ? cout << "Element is not present in array"
+        : cout << "Element is present at index " << result;
 
     return 0;
 }
